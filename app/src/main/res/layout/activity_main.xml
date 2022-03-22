@@ -45,7 +45,6 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnStart"
-        android:enabled="false"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="25dp"

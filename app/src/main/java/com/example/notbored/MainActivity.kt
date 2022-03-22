@@ -25,14 +25,28 @@ class MainActivity : AppCompatActivity() {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
             override fun afterTextChanged(editable: Editable) {
-                binding.btnStart.isEnabled = editable.toString().isNotBlank()
+                when {
+                    editable.isBlank() -> {
+                        Utils.cantParticipants = 0
+                    }
+                    Integer.parseInt(editable.toString()) < 0 -> {
+                        binding.btnStart.isEnabled = false
+                    }
+                    else -> {
+                        Utils.cantParticipants = (Integer.parseInt(editable.toString()))
+                    }
+                }
             }
         }))
 
         binding.btnStart.setOnClickListener {
-            val intentCategoriesActivity = Intent(this, CategoriesActivity::class.java)
-            Utils.cantParticipants = Integer.parseInt(binding.etParticipants.text.toString())
-            this.startActivity(intentCategoriesActivity)
+            if (Utils.acceptTermsAndCondition) {
+                val intentCategoriesActivity = Intent(this, CategoriesActivity::class.java)
+                this.startActivity(intentCategoriesActivity)
+            }else{
+                val intentTermConditionActivity = Intent(this, TermConditionActivity::class.java)
+                this.startActivity(intentTermConditionActivity)
+            }
         }
 
     }

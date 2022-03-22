@@ -1,9 +1,13 @@
 package com.example.notbored
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import com.example.notbored.databinding.ActivityHobbyBinding
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.CoroutineScope
@@ -11,7 +15,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.lang.Exception
+
 
 class HobbyActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHobbyBinding
@@ -20,7 +24,6 @@ class HobbyActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityHobbyBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         getTask()
 
         binding.btnTryAgain.setOnClickListener {
@@ -28,24 +31,62 @@ class HobbyActivity : AppCompatActivity() {
         }
     }
 
-    private fun getTask() {
-        if (Utils.categorySelected == getString(R.string.random)) {
-            getRandomTask()
+    private fun isNetworkConnected(): Boolean {
+        //1
+        val connectivityManager =
+            getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        //2
+        val activeNetwork = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            connectivityManager.activeNetwork
         } else {
-            getTaskByCategory(Utils.categorySelected)
+            TODO("VERSION.SDK_INT < M")
+        }
+        //3
+        val networkCapabilities = connectivityManager.getNetworkCapabilities(activeNetwork)
+        //4
+        return networkCapabilities != null &&
+                networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
+    }
+
+    private fun getTask() {
+
+        val isNetworkConnected = isNetworkConnected()
+        if (isNetworkConnected) {
+            when {
+                Utils.categorySelected == getString(R.string.random) && Utils.cantParticipants == 0 -> {
+                    getRandomTask("activity/")
+                }
+                Utils.categorySelected == getString(R.string.random) -> {
+                    getRandomTask("activity?${Utils.cantParticipants}")
+                }
+                Utils.categorySelected != getString(R.string.random) && Utils.cantParticipants == 0 -> {
+                    getTaskByCategory("activity?type=${Utils.categorySelected}")
+                }
+                else -> {
+                    getTaskByCategory("activity?type=${Utils.categorySelected}&participants=${Utils.cantParticipants}")
+                }
+            }
+        }else{
+            Snackbar.make(
+                binding.root,
+                "No hay conexion a internet... Intentalo mas tarde",
+                Snackbar.LENGTH_LONG
+            )
+                .show()
+            Log.e("Networking", "Call failed")
         }
     }
 
     //http://www.boredapi.com/api/activity/
-    private fun getRandomTask() {
+    private fun getRandomTask(query: String) {
 
         CoroutineScope(Dispatchers.IO).launch {
             val participants = Utils.cantParticipants
             Log.d("REQUEST", "${participants} ${Utils.categorySelected}")
             val call = getRetroFit().create(ApiService::class.java)
-                .getRandomTask("activity?participants=$participants")
+                .getRandomTask(query)
             val hobby: Hobby? = call.body()
-            Log.d("HOBBY",hobby.toString())
+            Log.d("HOBBY", hobby.toString())
             runOnUiThread {
                 hobby?.error?.let {
                     Snackbar.make(
@@ -89,9 +130,9 @@ class HobbyActivity : AppCompatActivity() {
                 val participants = Utils.cantParticipants
                 Log.d("REQUEST", "${participants} ${Utils.categorySelected}")
                 val call = getRetroFit().create(ApiService::class.java)
-                    .getTaskByCategory("activity?type=$query&participants=$participants")
+                    .getTaskByCategory(query)
                 val hobby: Hobby? = call.body()
-                Log.d("HOBBY",hobby.toString())
+                Log.d("HOBBY", hobby.toString())
                 runOnUiThread {
                     if (call.isSuccessful) {
                         hobby?.error?.let {

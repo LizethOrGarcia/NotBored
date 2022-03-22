@@ -5,4 +5,5 @@ object Utils {
     var cantParticipants : Int = 0
     var categorySelected = ""
     val BASE_URL = "https://www.boredapi.com/api/"
+    var acceptTermsAndCondition : Boolean = false
 }
