@@ -14,7 +14,6 @@ class CategoriesAdapter(private val categories: List<String>) : RecyclerView.Ada
     override fun onBindViewHolder(holder: CategoriesViewHolder, position: Int) {
         val categoriesAtPosition = categories[position]
         holder.bind(categoriesAtPosition)
-
     }
 
     override fun getItemCount() = categories.size

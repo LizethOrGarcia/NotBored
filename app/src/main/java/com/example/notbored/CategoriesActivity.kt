@@ -19,7 +19,7 @@ class CategoriesActivity : AppCompatActivity() {
 
         binding.btnRandom.setOnClickListener {
             Utils.categorySelected = getString(R.string.random)
-            val intentHobbyActivity = Intent(this, HobbyActivity::class.java)
+            val intentHobbyActivity = Intent(this, TaskActivity::class.java)
             startActivity(intentHobbyActivity)
         }
     }

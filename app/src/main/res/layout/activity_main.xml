@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/backgroundView"
     tools:context=".MainActivity">
 
     <TextView
@@ -11,7 +12,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/title_app"
-        android:textSize="@dimen/size_title"
+        android:textSize="35sp"
+        android:textColor="@color/titleApp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -21,10 +24,12 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/containerEtParticipants"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        app:boxBackgroundColor="@color/white"
+        android:textColorHint="@color/titleApp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingStart="25dp"
-        android:paddingEnd="25dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginStart="25dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -33,7 +38,6 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etParticipants"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -42,6 +46,18 @@
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent" />
     </com.google.android.material.textfield.TextInputLayout>
+
+    <Spinner
+        android:id="@+id/spinnerPrice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/containerEtParticipants"
+        app:layout_constraintVertical_bias="0.121" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnStart"
@@ -54,7 +70,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/containerEtParticipants" />
+        app:layout_constraintTop_toBottomOf="@+id/spinnerPrice" />
 
     <TextView
         android:id="@+id/tvTermsCond"
@@ -63,6 +79,7 @@
         android:text="@string/terms_and_condition"
         android:autoLink="all"
         android:textStyle="bold"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
