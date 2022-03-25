@@ -1,5 +1,6 @@
 package com.example.notbored
-
+/*This activity is in charge of the show the category list
+* */
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -18,6 +19,7 @@ class CategoriesActivity : AppCompatActivity() {
         binding.rvCategories.adapter = categoriesAdapter
 
         binding.btnRandom.setOnClickListener {
+            //Store the random category
             Utils.categorySelected = getString(R.string.random)
             val intentHobbyActivity = Intent(this, TaskActivity::class.java)
             startActivity(intentHobbyActivity)

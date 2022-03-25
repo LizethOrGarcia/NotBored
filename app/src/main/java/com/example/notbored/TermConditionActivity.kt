@@ -1,5 +1,6 @@
 package com.example.notbored
-
+/*This activity is in charge of the show terms and conditions
+* */
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.notbored.databinding.ActivityTermConditionBinding
@@ -21,6 +22,7 @@ class TermConditionActivity : AppCompatActivity() {
         binding.cbTermsAndCondition.isChecked = Utils.acceptTermsAndCondition
 
         binding.cbTermsAndCondition.setOnCheckedChangeListener { _, isChecked ->
+            /*Verify that they were accepted and store the status */
             if (isChecked) {
                 Utils.acceptTermsAndCondition = true
                 Snackbar.make(
@@ -32,7 +34,6 @@ class TermConditionActivity : AppCompatActivity() {
             } else {
                 Utils.acceptTermsAndCondition = false
             }
-
         }
     }
 }

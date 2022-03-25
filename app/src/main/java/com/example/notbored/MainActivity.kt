@@ -1,11 +1,13 @@
 package com.example.notbored
-
+/*
+This activity is in charge of the selecting the parameters price and number of participants.
+Also check the terms and conditions
+* */
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -22,11 +24,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         reset()
         val isNetworkConnected = Utils.checkForInternet(this)
+        //Check the internet connection and enable button start or show error message
         if (isNetworkConnected) {
-            Log.d("INTERNET", "SI")
             binding.btnStart.isEnabled = true
         } else {
-            Log.d("INTERNET", "NO")
             binding.btnStart.isEnabled = false
             Snackbar.make(
                 binding.root,
@@ -79,6 +80,7 @@ class MainActivity : AppCompatActivity() {
         }))
 
         binding.btnStart.setOnClickListener {
+            //Check terms and conditions redirect to category selection or accept terms and condition.
             if (Utils.acceptTermsAndCondition) {
                 val intentCategoriesActivity = Intent(this, CategoriesActivity::class.java)
                 this.startActivity(intentCategoriesActivity)
@@ -90,10 +92,9 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    //This functions reset the inputs
     private fun reset(){
         binding.etParticipants.setText("")
         binding.spinnerPrice.setSelection(0)
     }
-
-
 }

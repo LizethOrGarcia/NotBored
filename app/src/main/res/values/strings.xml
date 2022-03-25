@@ -26,6 +26,10 @@ Nisl pulvinar taciti tellus diam quam dictum cursus potenti euismod natoque feug
     <string name="you_accept_terms_and_conditions">The terms and conditions are accepted…</string>
     <string name="category">Category</string>
     <string name="back">Back..</string>
+    <string name="value_free">price=0.0</string>
+    <string name="value_low"><![CDATA[minprice=0.1&maxprice=0.3]]></string>
+    <string name="value_medium"><![CDATA[minprice=0.4&maxprice=0.6]]></string>
+    <string name="value_high"><![CDATA[minprice=0.7&maxprice=1.0]]></string>
 
     <string-array name="prices">
         <item>Selected price:</item>

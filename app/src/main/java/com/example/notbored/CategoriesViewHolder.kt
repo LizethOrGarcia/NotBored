@@ -11,6 +11,7 @@ class CategoriesViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     fun bind(category: String) {
         binding.tvCategory.text = category
         binding.ivArrow.setOnClickListener {
+            //Store the selected category
             Utils.categorySelected = category
             val intentHobbyActivity = Intent(it.context, TaskActivity::class.java)
             it.context.startActivity(intentHobbyActivity)
